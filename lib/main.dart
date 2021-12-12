@@ -1,6 +1,13 @@
+import 'dart:io';
+import 'dart:async';
+import 'package:path/path.dart' as p;
 import 'package:flutter/material.dart';
+import 'systray.dart';
 
 void main() {
+  if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
+    SysTray st = SysTray();
+  }
   runApp(const MyApp());
 }
 
@@ -11,7 +18,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Hipstur',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -24,7 +31,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'Hipstur'),
     );
   }
 }
