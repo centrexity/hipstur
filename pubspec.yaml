@@ -41,6 +41,10 @@ dependencies:
 
   bitsdojo_window: ^0.1.1+1
 
+
+  just_audio:
+  just_audio_libwinmedia:
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

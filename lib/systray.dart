@@ -12,31 +12,30 @@ import 'package:system_tray/system_tray.dart';
 
 
 
-class SysTray extends StatefulWidget {
-  const SysTray({Key? key}) : super(key: key);
+class SysTray  {
 
-  @override
-  State<SysTray> createState() => _SysTrayState();
-}
-
-class _SysTrayState extends State<SysTray> {
   final SystemTray _systemTray = SystemTray();
   Timer? _timer;
   bool _toogleTrayIcon = true;
 
-  @override
-  void initState() {
-    super.initState();
+  //@override
+  //void initState() {
+  SysTray() {
+    print("here");
+    //super.initState();
     initSystemTray();
   }
 
+  /*
   @override
   void dispose() {
     super.dispose();
     _timer?.cancel();
   }
+   */
 
   Future<void> initSystemTray() async {
+    print("initSystemTray");
     String path;
     if (Platform.isWindows) {
       path = p.joinAll([
@@ -52,6 +51,7 @@ class _SysTrayState extends State<SysTray> {
         'data/flutter_assets/assets',
         'app_icon.png'
       ]);
+      print(path);
     }
 
     // We first init the systray menu and then add the menu entries
