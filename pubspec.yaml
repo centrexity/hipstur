@@ -35,6 +35,9 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
 
+  #Currently, if you include the dart.io.Platform anywhere in your code, your app will throw the following error on Web
+  universal_platform: ^1.0.0+1
+
   #localstorage: ^3.0.6
   localstorage:
 

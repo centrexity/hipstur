@@ -4,6 +4,7 @@ import 'package:path/path.dart' as p;
 import 'package:flutter/material.dart';
 import 'systray.dart';
 
+import 'package:universal_platform/universal_platform.dart';
 import 'package:just_audio/just_audio.dart';
 
 
@@ -59,7 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
   _MyHomePageState() {
-    if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
+    if (UniversalPlatform.isWindows || UniversalPlatform.isLinux || UniversalPlatform.isMacOS) {
       SysTray st = SysTray();
     }
 
