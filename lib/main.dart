@@ -58,18 +58,49 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  AudioPlayer player= AudioPlayer();
 
   _MyHomePageState() {
     if (UniversalPlatform.isWindows || UniversalPlatform.isLinux || UniversalPlatform.isMacOS) {
       SysTray st = SysTray();
     }
+    loadaudio();
 
-    final player = AudioPlayer();
-    player.setUrl('https://hipstur.com/test.flac');
-    player.play();
+  }
+
+  void loadaudio() async{
+    //player = AudioPlayer();
+    //player.setUrl('https://hipstur.com/test.flac');
+    //player.load();
+    try {
+      await player.setUrl("https://hipstur.com/test.flac");
+      player.load();
+    } on PlayerException catch (e) {
+      // iOS/macOS: maps to NSError.code
+      // Android: maps to ExoPlayerException.type
+      // Web: maps to MediaError.code
+      // Linux/Windows: maps to PlayerErrorCode.index
+      print("Error code: ${e.code}");
+      // iOS/macOS: maps to NSError.localizedDescription
+      // Android: maps to ExoPlaybackException.getMessage()
+      // Web/Linux: a generic message
+      // Windows: MediaPlayerError.message
+      print("Error message: ${e.message}");
+    } on PlayerInterruptedException catch (e) {
+      // This call was interrupted since another audio source was loaded or the
+      // player was stopped or disposed before this audio source could complete
+      // loading.
+      print("Connection aborted: ${e.message}");
+    } catch (e) {
+      // Fallback for all errors
+      print(e);
+    }
   }
 
   void _incrementCounter() {
+    //player.setUrl('https://hipstur.com/test.flac');
+    //player.load();
+    player.play();
     setState(() {
       // This call to setState tells the Flutter framework that something has
       // changed in this State, which causes it to rerun the build method below
