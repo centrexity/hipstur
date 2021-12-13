@@ -18,6 +18,7 @@ Please feel free to contribute any way you can to this or society as a whole.
 | Menu                           |         |     |       |     |         |       |
 | Play Lossless                  |         |     |       |     |         |       |
 | Play Lossy Lower Quality       |         |     |       |     |         |       |
+| Offline Playback               |         |     |       |     |         |       |
 | Background Play                |         |     |       |     |         |       |
 | Background Upload              |         |     |       |     |         |       |
 | Account Sync                   |         |     |       |     |         |       |
