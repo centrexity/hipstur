@@ -2,6 +2,8 @@ import 'dart:io';
 import 'dart:async';
 import 'package:path/path.dart' as p;
 import 'package:flutter/material.dart';
+
+import 'menu.dart';
 import 'systray.dart';
 
 import 'package:universal_platform/universal_platform.dart';
@@ -73,7 +75,11 @@ class _MyHomePageState extends State<MyHomePage> {
     //player.setUrl('https://hipstur.com/test.flac');
     //player.load();
     try {
-      await player.setUrl("https://hipstur.com/test.flac");
+      //await player.setUrl("https://hipstur.com/test.flac");
+    player.setAudioSource(
+    AudioSource.uri(Uri.parse(
+    "https://hipstur.com/test.flac")),
+    preload: false);
       player.load();
     } on PlayerException catch (e) {
       // iOS/macOS: maps to NSError.code
@@ -120,6 +126,7 @@ class _MyHomePageState extends State<MyHomePage> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
+      drawer: Menu(),
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
