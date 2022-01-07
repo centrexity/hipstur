@@ -10,7 +10,7 @@ Please feel free to contribute any way you can to this or society as a whole.
 
 | Progress                       | Android | iOS | macOS | Web | Windows | Linux |
 | ------------------------------ | :-----: | :-: | :---: | :-: | :-----: | :---: |
-| Initial Buid                   | ✅      | ✅  | ✅    | ✅  | ✅      | ✅    |
+| Initial Build                   | ✅      | ✅  | ✅    | ✅  | ✅      | ✅    |
 | Account Login                  |         |     |       |     |         |       |
 | Google Login                   |         |     |       |     |         |       |
 | Facebook Login                 |         |     |       |     |         |       |
