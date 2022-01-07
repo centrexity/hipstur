@@ -10,7 +10,7 @@ Please feel free to contribute any way you can to this or society as a whole.
 
 | Progress                       | Android | iOS | macOS | Web | Windows | Linux |
 | ------------------------------ | :-----: | :-: | :---: | :-: | :-----: | :---: |
-| Initial Build                   | ✅      | ✅  | ✅    | ✅  | ✅      | ✅    |
+| Initial Build                  | ✅      | ✅  | ✅    | ✅  | ✅      | ✅    |
 | Account Login                  |         |     |       |     |         |       |
 | Google Login                   |         |     |       |     |         |       |
 | Facebook Login                 |         |     |       |     |         |       |
@@ -23,6 +23,6 @@ Please feel free to contribute any way you can to this or society as a whole.
 | Background Upload              |         |     |       |     |         |       |
 | Account Sync                   |         |     |       |     |         |       |
 | Background Controls            |         |     |       |     |         |       |
-
+| Crossfade                      |         |     |       |     |         |       |
 
 
