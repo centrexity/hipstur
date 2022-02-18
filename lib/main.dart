@@ -1,16 +1,25 @@
 import 'dart:io';
 import 'dart:async';
+import 'dart:convert';
 import 'package:path/path.dart' as p;
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
+import 'loading.dart';
+import 'login.dart';
 import 'menu.dart';
 import 'systray.dart';
 
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:universal_platform/universal_platform.dart';
 import 'package:just_audio/just_audio.dart';
-
+import 'package:localstorage/localstorage.dart';
 
 void main() {
+  if( UniversalPlatform.isAndroid || UniversalPlatform.isIOS ) {
+    WidgetsFlutterBinding.ensureInitialized();
+    MobileAds.instance.initialize();
+  }
   runApp(const MyApp());
 }
 
@@ -60,14 +69,45 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
-  AudioPlayer player= AudioPlayer();
+  AudioPlayer player = AudioPlayer();
+  bool isloading = true;
+  bool isloggedin = false;
+  //state
+  //string token = "";
+  final LocalStorage storage = new LocalStorage('hipstur_data.json');
 
   _MyHomePageState() {
     if (UniversalPlatform.isWindows || UniversalPlatform.isLinux || UniversalPlatform.isMacOS) {
       SysTray st = SysTray();
     }
-    loadaudio();
+  }
 
+
+  void connectiontest() async{
+    /*
+    try {
+      final result = await InternetAddress.lookup('hipstur.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        print('connected');
+        //return;
+      }
+    } on SocketException catch (_) {
+      print('not connected');
+      return;
+    }
+    */
+
+    // load page
+    try {
+      final response = await http.get(Uri.parse("https://hipstur.com/"));
+      //print("response code: "+response.statusCode);
+      if (response.statusCode == 200) {
+        print("connected");
+      }
+    } catch (e) {
+      // Fallback for all errors
+      print(e.toString());
+    }
   }
 
   void loadaudio() async{
@@ -103,6 +143,88 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
+  void init() async{
+    //start connection test
+    connectiontest();
+
+    //check if we have a token
+    var hold = storage.getItem('token') ?? "";
+    //print("token: "+ hold);
+    if( hold==Null || hold=="" ){
+      setState(() {
+        isloggedin = false;
+        isloading = false;
+      });
+      return;
+    }
+    //check if were online
+    //see if we need to check immediatly (if it hasnt been checked in a week or so)
+    //still trigger a check but dont wait on it
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    init();
+  }
+
+  void login() async{
+
+    try {
+      final response = await http.post(
+        Uri.parse("https://hipstur.com/api/login"),
+        headers: {"Content-Type": "application/x-www-form-urlencoded"},
+        body: "email=demo&pass=demo",
+        encoding: Encoding.getByName("utf-8")
+      );
+
+      //print("response code: "+response.statusCode);
+      if (response.statusCode == 200) {
+        print("login response");
+        print(response.body);
+        Map<String, dynamic> data = jsonDecode(response.body);
+
+        if( data.containsKey("error") ){
+          //errormsg
+          print("erromsg");
+          print( data['error']);
+          return;
+        }
+
+        //print('Howdy, ${user['name']}!');
+        setState(() {
+          isloggedin=true;
+        });
+      } else {
+        print("login response code not 200");
+        print(response.statusCode);
+      }
+    } catch (e) {
+      // Fallback for all errors
+      print(e.toString());
+    }
+  }
+
+  void login_google(){
+
+  }
+
+  void login_facebook(){
+
+  }
+
+  void login_apple(){
+
+  }
+
+  void logout(){
+    //clear everything
+    //set state to login
+    setState(() {
+      isloggedin=false;
+    });
+  }
+
   void _incrementCounter() {
     //player.setUrl('https://hipstur.com/test.flac');
     //player.load();
@@ -119,19 +241,19 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
+
+    if( isloading ){
+      return build_loading(context);
+    }
+
+    if( !isloggedin ){
+      return build_login(context, login, "");
+    }
+
+
+
     return Scaffold(
       drawer: Menu(),
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
@@ -170,3 +292,5 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+
+
