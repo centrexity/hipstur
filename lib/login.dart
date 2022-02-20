@@ -14,7 +14,7 @@ import 'colors.dart';
 
 
   Widget build_login_logo(BuildContext context){
-    return Image.asset('assets/hipstur.png');
+    return Image.asset('assets/hipstur.png',scale: 0.6) ;
   }
 
 /*
@@ -74,22 +74,40 @@ Widget buildlogin(BuildContext context) {
               onTap: () { _callback(); }, // Handle your callback
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.max,
                 children: <Widget>[
                   build_login_logo(context),
                   Text(errormsg, style: TextStyle(color:color_errmsg)),
-                  TextField(
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.5,
+                      child: TextField(
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       hintText: 'Email',
                     ),
                   ),
-                  TextField(
+                  ),
+
+                    Container(
+                      height: 10.0,
+                    ),
+
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.5,
+                    child: TextField(
                     obscureText: true,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       hintText: 'Password',
                     ),
                   ),
+                  ),
+
+                  Container(
+                    height: 10.0,
+                  ),
+
+
                   build_login_buttons(context),
                 ],
               ),
