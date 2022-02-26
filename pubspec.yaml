@@ -55,9 +55,14 @@ dependencies:
   just_audio:
   just_audio_libwinmedia:
 
-  google_mobile_ads:
+  #google_mobile_ads:
 
   window_manager:
+
+  font_awesome_flutter:
+  bubble_tab_indicator: "^0.1.5"
+
+
 
 dev_dependencies:
   flutter_test:

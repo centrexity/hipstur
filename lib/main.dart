@@ -10,7 +10,7 @@ import 'login.dart';
 import 'menu.dart';
 import 'systray.dart';
 
-import 'package:google_mobile_ads/google_mobile_ads.dart';
+//import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:universal_platform/universal_platform.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:localstorage/localstorage.dart';
@@ -18,7 +18,7 @@ import 'package:localstorage/localstorage.dart';
 void main() {
   if( UniversalPlatform.isAndroid || UniversalPlatform.isIOS ) {
     WidgetsFlutterBinding.ensureInitialized();
-    MobileAds.instance.initialize();
+    //MobileAds.instance.initialize();
   }
   runApp(const MyApp());
 }
