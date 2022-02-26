@@ -17,6 +17,7 @@ We believe your audio is yours and we want to keep it independant of stores/hard
 | Progress                       | Android | iOS | macOS | Web | Windows | Linux |
 | ------------------------------ | :-----: | :-: | :---: | :-: | :-----: | :---: |
 | Initial Build                  | ✅      | ✅  | ✅    | ✅  | ✅      | ✅    |
+| Demo Login                     |         |     |       |     |         |       |
 | Account Login                  |         |     |       |     |         |       |
 | Google Login                   |         |     |       |     |         |       |
 | Facebook Login                 |         |     |       |     |         |       |
