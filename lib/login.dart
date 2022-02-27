@@ -296,7 +296,7 @@ class _NavbarState extends State<Navbar>
               SocialIconsWidget(FaIcon(FontAwesomeIcons.apple, color: Colors.white),),
               SocialIconsWidget(FaIcon(FontAwesomeIcons.google, color: Colors.white)),
               SocialIconsWidget(FaIcon(FontAwesomeIcons.facebook, color: Colors.white),),
-              SocialIconsWidget(FaIcon(FontAwesomeIcons.vk, color: Colors.white)),
+              SocialIconsWidget(FaIcon(FontAwesomeIcons.bolt, color: Colors.white)),
 
 /*
               Container(
@@ -435,7 +435,7 @@ class _NavbarState extends State<Navbar>
               SocialIconsWidget(FaIcon(FontAwesomeIcons.apple, color: Colors.white),),
               SocialIconsWidget(FaIcon(FontAwesomeIcons.google, color: Colors.white)),
               SocialIconsWidget(FaIcon(FontAwesomeIcons.facebook, color: Colors.white),),
-              SocialIconsWidget(FaIcon(FontAwesomeIcons.vk, color: Colors.white)),
+              SocialIconsWidget(FaIcon(FontAwesomeIcons.bolt, color: Colors.white)),
 /*
               Container(
                 width: 80,
