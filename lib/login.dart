@@ -54,10 +54,10 @@ Widget Button(){
     ),
   );
 }
-Container SocialIconsWidget(Widget widget) {
+Container SocialIconsWidget(Widget widget, String name ) {
   return Container(
     width: 80,
-    height: 50,
+    height: 60,
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(10),
       color: Color(0xff4165ad),
@@ -65,7 +65,12 @@ Container SocialIconsWidget(Widget widget) {
     child: Padding(
       padding: const EdgeInsets.all(8.0),
       child: Center(
-        child: widget,
+        child: Column(
+          children: <Widget>[
+            widget,
+            Text(name, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+          ]
+        )
       ),
     ),
   );
@@ -293,10 +298,10 @@ class _NavbarState extends State<Navbar>
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              SocialIconsWidget(FaIcon(FontAwesomeIcons.apple, color: Colors.white),),
-              SocialIconsWidget(FaIcon(FontAwesomeIcons.google, color: Colors.white)),
-              SocialIconsWidget(FaIcon(FontAwesomeIcons.facebook, color: Colors.white),),
-              SocialIconsWidget(FaIcon(FontAwesomeIcons.bolt, color: Colors.white)),
+              SocialIconsWidget(FaIcon(FontAwesomeIcons.apple, color: Colors.white), "Apple"),
+              SocialIconsWidget(FaIcon(FontAwesomeIcons.google, color: Colors.white), "Google"),
+              SocialIconsWidget(FaIcon(FontAwesomeIcons.facebook, color: Colors.white), "Facebook"),
+              SocialIconsWidget(FaIcon(FontAwesomeIcons.bolt, color: Colors.white), "Demo"),
 
 /*
               Container(
@@ -432,10 +437,10 @@ class _NavbarState extends State<Navbar>
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              SocialIconsWidget(FaIcon(FontAwesomeIcons.apple, color: Colors.white),),
-              SocialIconsWidget(FaIcon(FontAwesomeIcons.google, color: Colors.white)),
-              SocialIconsWidget(FaIcon(FontAwesomeIcons.facebook, color: Colors.white),),
-              SocialIconsWidget(FaIcon(FontAwesomeIcons.bolt, color: Colors.white)),
+              SocialIconsWidget(FaIcon(FontAwesomeIcons.apple, color: Colors.white), "Apple"),
+              SocialIconsWidget(FaIcon(FontAwesomeIcons.google, color: Colors.white), "Google"),
+              SocialIconsWidget(FaIcon(FontAwesomeIcons.facebook, color: Colors.white), "Facebook"),
+              SocialIconsWidget(FaIcon(FontAwesomeIcons.bolt, color: Colors.white), "Demo"),
 /*
               Container(
                 width: 80,
