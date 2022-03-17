@@ -240,7 +240,9 @@ class _MyHomePageState extends State<MyHomePage> {
       logout();
       return;
     }
-    if( message=="" ) {
+    if( message=="loginbtn:Demo" ) {
+      login_demo();
+      return;
     }
   }
 

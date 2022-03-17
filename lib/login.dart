@@ -14,101 +14,6 @@ import 'defs.dart';
 //mixin Login on State<MyHomePage> {
 //mixin Login <T extends StatefulWidget> on State<T> {
 
-Widget Button() {
-  return Padding(
-    padding: const EdgeInsets.only(left: 35.0, right: 35),
-    child: Center(
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(5),
-          color: Color(0xff4b8dec),
-        ),
-        height: 60,
-        width: double.infinity,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text('Sign in',
-                style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18)),
-            SizedBox(
-              width: 10,
-            ),
-            CircleAvatar(
-              radius: 12,
-              backgroundColor: Color(0xff80aef3),
-              child: FaIcon(
-                FontAwesomeIcons.arrowRight,
-                color: Colors.white,
-                size: 12,
-              ),
-            )
-          ],
-        ),
-      ),
-    ),
-  );
-}
-
-Widget SocialIconsWidget(Widget widget, String name) {
-  return InkWell(
-    child: Container(
-      width: 80,
-      height: 60,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: Color(0xff4165ad),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Center(
-            child: Column(children: <Widget>[
-          widget,
-          Text(
-            name,
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-          ),
-        ])),
-      ),
-    ),
-    onTap: () {
-      print("Click event on Container");
-    },
-  );
-}
-
-Container textfieldWidget(BuildContext context, String? name,
-    TextEditingController controller, TextInputType textType, bool obscure) {
-  return Container(
-    height: 50,
-    width: MediaQuery.of(context).size.width * 0.75,
-    margin: EdgeInsets.only(left: 20, right: 20),
-    child: TextField(
-        obscureText: obscure,
-        autofocus: false,
-        cursorColor: Color(0xff505969),
-        keyboardType: textType,
-        controller: controller,
-        style: TextStyle(color: Colors.white, fontSize: 20),
-        decoration: InputDecoration(
-          filled: true,
-          fillColor: Colors.transparent,
-          labelText: name,
-          hintText: name,
-          hintStyle: TextStyle(fontSize: 15, color: Colors.grey),
-          labelStyle: TextStyle(fontSize: 15, color: Colors.grey),
-          focusColor: Colors.grey[500],
-          enabledBorder: const OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.grey, width: 0.0),
-          ),
-          focusedBorder: const OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.grey, width: 0.0),
-          ),
-        )),
-  );
-}
 
 class Navbar extends StatefulWidget {
   final VoidStringCallback msgcallback;
@@ -120,7 +25,7 @@ class Navbar extends StatefulWidget {
 
 class _NavbarState extends State<Navbar> with SingleTickerProviderStateMixin {
 
-  //final VoidStringCallback msgcallback;
+  //VoidStringCallback msgcallback;
   //_NavbarState({required this.msgcallback});
 
   var LoginemailIDController = TextEditingController();
@@ -135,6 +40,106 @@ class _NavbarState extends State<Navbar> with SingleTickerProviderStateMixin {
 
   Color widgetColor = Color(0xff505969);
 
+
+  Widget Button() {
+    return Padding(
+      padding: const EdgeInsets.only(left: 35.0, right: 35),
+      child: Center(
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(5),
+            color: Color(0xff4b8dec),
+          ),
+          height: 60,
+          width: double.infinity,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text('Sign in',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18)),
+              SizedBox(
+                width: 10,
+              ),
+              CircleAvatar(
+                radius: 12,
+                backgroundColor: Color(0xff80aef3),
+                child: FaIcon(
+                  FontAwesomeIcons.arrowRight,
+                  color: Colors.white,
+                  size: 12,
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget SocialIconsWidget(Widget widget, String name, void Function(String msg) _callback) {
+    return InkWell(
+      child: Container(
+        width: 80,
+        height: 60,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: Color(0xff4165ad),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Center(
+              child: Column(children: <Widget>[
+                widget,
+                Text(
+                  name,
+                  style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                ),
+              ])),
+        ),
+      ),
+      onTap: () {
+        //print("Click event on Container");
+        _callback("loginbtn:"+name);
+      },
+    );
+  }
+
+  Container textfieldWidget(BuildContext context, String? name,
+      TextEditingController controller, TextInputType textType, bool obscure) {
+    return Container(
+      height: 50,
+      width: MediaQuery.of(context).size.width * 0.75,
+      margin: EdgeInsets.only(left: 20, right: 20),
+      child: TextField(
+          obscureText: obscure,
+          autofocus: false,
+          cursorColor: Color(0xff505969),
+          keyboardType: textType,
+          controller: controller,
+          style: TextStyle(color: Colors.white, fontSize: 20),
+          decoration: InputDecoration(
+            filled: true,
+            fillColor: Colors.transparent,
+            labelText: name,
+            hintText: name,
+            hintStyle: TextStyle(fontSize: 15, color: Colors.grey),
+            labelStyle: TextStyle(fontSize: 15, color: Colors.grey),
+            focusColor: Colors.grey[500],
+            enabledBorder: const OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.grey, width: 0.0),
+            ),
+            focusedBorder: const OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.grey, width: 0.0),
+            ),
+          )),
+    );
+  }
+
+
+
   final List<Tab> tabs = <Tab>[
     new Tab(text: "Login"),
     new Tab(text: "Register"),
@@ -148,6 +153,7 @@ class _NavbarState extends State<Navbar> with SingleTickerProviderStateMixin {
     _tabController = new TabController(vsync: this, length: tabs.length);
 
     widget.msgcallback("_NavbarState: initState");
+    //msgcallback = widget.msgcallback;
   }
 
   @override
@@ -287,15 +293,15 @@ class _NavbarState extends State<Navbar> with SingleTickerProviderStateMixin {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               SocialIconsWidget(
-                  FaIcon(FontAwesomeIcons.apple, color: Colors.white), "Apple"),
+                  FaIcon(FontAwesomeIcons.apple, color: Colors.white), "Apple", widget.msgcallback),
               SocialIconsWidget(
                   FaIcon(FontAwesomeIcons.google, color: Colors.white),
-                  "Google"),
+                  "Google", widget.msgcallback),
               SocialIconsWidget(
                   FaIcon(FontAwesomeIcons.facebook, color: Colors.white),
-                  "Facebook"),
+                  "Facebook", widget.msgcallback),
               SocialIconsWidget(
-                  FaIcon(FontAwesomeIcons.bolt, color: Colors.white), "Demo"),
+                  FaIcon(FontAwesomeIcons.bolt, color: Colors.white), "Demo", widget.msgcallback),
 
 /*
               Container(
@@ -426,15 +432,13 @@ class _NavbarState extends State<Navbar> with SingleTickerProviderStateMixin {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               SocialIconsWidget(
-                  FaIcon(FontAwesomeIcons.apple, color: Colors.white), "Apple"),
+                  FaIcon(FontAwesomeIcons.apple, color: Colors.white), "Apple", widget.msgcallback),
               SocialIconsWidget(
-                  FaIcon(FontAwesomeIcons.google, color: Colors.white),
-                  "Google"),
+                  FaIcon(FontAwesomeIcons.google, color: Colors.white), "Google", widget.msgcallback),
               SocialIconsWidget(
-                  FaIcon(FontAwesomeIcons.facebook, color: Colors.white),
-                  "Facebook"),
+                  FaIcon(FontAwesomeIcons.facebook, color: Colors.white), "Facebook", widget.msgcallback),
               SocialIconsWidget(
-                  FaIcon(FontAwesomeIcons.bolt, color: Colors.white), "Demo"),
+                  FaIcon(FontAwesomeIcons.bolt, color: Colors.white), "Demo", widget.msgcallback),
 /*
               Container(
                 width: 80,
@@ -465,89 +469,6 @@ Widget build_login_logo(BuildContext context) {
   return Image.asset('assets/hipstur.png', scale: 0.6);
 }
 
-/*
-Widget buildlogin(BuildContext context) {
-  return Scaffold(
-    appBar: AppBar(
-      title: Text('Hipstur'),
-    ),
-    body: Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          buildlogin_logo(context),
-          const Text('Login')
-        ],
-      ),
-    )
-  );
-}
-*/
-
-Widget build_login_buttons(BuildContext context) {
-  //if ( UniversalPlatform.isIOS || UniversalPlatform.isMacOS) {
-  //
-  //}
-
-  return Wrap(
-      spacing: 8.0, // gap between adjacent chips
-      runSpacing: 4.0, // gap between lines
-      children: <Widget>[
-        const Text('Login'),
-        const Text('Google Login'),
-        const Text('Facebook Login'),
-        const Text('Apple Login'),
-        const Text('Demo'),
-      ]);
-}
-
 Widget build_login( BuildContext context, void _callback(String msg), String errormsg ) {
   return Navbar( msgcallback: _callback );
-  /*
-  return Scaffold(
-      backgroundColor: color_bg,
-      //appBar: AppBar(
-      //  title: Text('Hipstur'),
-      //),
-      body: Center(
-          child: InkWell(
-        onTap: () {
-          _callback();
-        }, // Handle your callback
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.max,
-          children: <Widget>[
-            build_login_logo(context),
-            Text(errormsg, style: TextStyle(color: color_errmsg)),
-            Container(
-              width: MediaQuery.of(context).size.width * 0.5,
-              child: TextField(
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'Email',
-                ),
-              ),
-            ),
-            Container(
-              height: 10.0,
-            ),
-            Container(
-              width: MediaQuery.of(context).size.width * 0.5,
-              child: TextField(
-                obscureText: true,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'Password',
-                ),
-              ),
-            ),
-            Container(
-              height: 10.0,
-            ),
-            build_login_buttons(context),
-          ],
-        ),
-      )));
-   */
 }
