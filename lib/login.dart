@@ -6,17 +6,15 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:bubble_tab_indicator/bubble_tab_indicator.dart';
 
-
 import 'package:universal_platform/universal_platform.dart';
 
 import 'colors.dart';
-
+import 'defs.dart';
 
 //mixin Login on State<MyHomePage> {
 //mixin Login <T extends StatefulWidget> on State<T> {
 
-
-Widget Button(){
+Widget Button() {
   return Padding(
     padding: const EdgeInsets.only(left: 35.0, right: 35),
     child: Center(
@@ -45,7 +43,6 @@ Widget Button(){
                 FontAwesomeIcons.arrowRight,
                 color: Colors.white,
                 size: 12,
-
               ),
             )
           ],
@@ -54,28 +51,33 @@ Widget Button(){
     ),
   );
 }
-Container SocialIconsWidget(Widget widget, String name ) {
-  return Container(
-    width: 80,
-    height: 60,
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(10),
-      color: Color(0xff4165ad),
-    ),
-    child: Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Center(
-        child: Column(
-          children: <Widget>[
-            widget,
-            Text(name, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
-          ]
-        )
+
+Widget SocialIconsWidget(Widget widget, String name) {
+  return InkWell(
+    child: Container(
+      width: 80,
+      height: 60,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: Color(0xff4165ad),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Center(
+            child: Column(children: <Widget>[
+          widget,
+          Text(
+            name,
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          ),
+        ])),
       ),
     ),
+    onTap: () {
+      print("Click event on Container");
+    },
   );
 }
-
 
 Container textfieldWidget(BuildContext context, String? name,
     TextEditingController controller, TextInputType textType, bool obscure) {
@@ -89,9 +91,8 @@ Container textfieldWidget(BuildContext context, String? name,
         cursorColor: Color(0xff505969),
         keyboardType: textType,
         controller: controller,
-        style: TextStyle(color: Colors.white,fontSize: 20),
+        style: TextStyle(color: Colors.white, fontSize: 20),
         decoration: InputDecoration(
-
           filled: true,
           fillColor: Colors.transparent,
           labelText: name,
@@ -109,19 +110,18 @@ Container textfieldWidget(BuildContext context, String? name,
   );
 }
 
-
-
-
-
 class Navbar extends StatefulWidget {
-  const Navbar({ Key? key }) : super(key: key);
+  final VoidStringCallback msgcallback;
+  const Navbar({required this.msgcallback, Key? key}) : super(key: key);
 
   @override
   _NavbarState createState() => _NavbarState();
 }
 
-class _NavbarState extends State<Navbar>
-    with SingleTickerProviderStateMixin {
+class _NavbarState extends State<Navbar> with SingleTickerProviderStateMixin {
+
+  //final VoidStringCallback msgcallback;
+  //_NavbarState({required this.msgcallback});
 
   var LoginemailIDController = TextEditingController();
   var LoginpasswordController = TextEditingController();
@@ -130,15 +130,14 @@ class _NavbarState extends State<Navbar>
   var RegisternameController = TextEditingController();
   bool checkbox = false;
 
-  Color ScreenColor =Color(0xff444b5d);
-  Color selectedColor =Color(0xff343b4d);
+  Color ScreenColor = Color(0xff444b5d);
+  Color selectedColor = Color(0xff343b4d);
 
-  Color widgetColor =Color(0xff505969);
+  Color widgetColor = Color(0xff505969);
 
   final List<Tab> tabs = <Tab>[
     new Tab(text: "Login"),
     new Tab(text: "Register"),
-
   ];
 
   TabController? _tabController;
@@ -147,8 +146,9 @@ class _NavbarState extends State<Navbar>
   void initState() {
     super.initState();
     _tabController = new TabController(vsync: this, length: tabs.length);
-  }
 
+    widget.msgcallback("_NavbarState: initState");
+  }
 
   @override
   void dispose() {
@@ -156,10 +156,9 @@ class _NavbarState extends State<Navbar>
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
-    return  SafeArea(
+    return SafeArea(
       child: Scaffold(
         backgroundColor: ScreenColor,
         body: SingleChildScrollView(
@@ -183,24 +182,21 @@ class _NavbarState extends State<Navbar>
                   width: 200,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5),
-                    color: Color(0xff565c6e),),
+                    color: Color(0xff565c6e),
+                  ),
                   child: TabBar(
                     tabs: tabs,
                     labelStyle: TextStyle(
                         fontSize: 16,
                         color: Colors.white,
                         fontWeight: FontWeight.bold),
-
                     unselectedLabelStyle: TextStyle(
                         fontSize: 16,
                         color: Colors.white,
                         fontWeight: FontWeight.bold),
                     controller: _tabController,
-
                     indicatorSize: TabBarIndicatorSize.tab,
                     indicatorColor: Color(0xff343b4d),
-
-
                     indicator: const BubbleTabIndicator(
                       indicatorHeight: 35.0,
                       indicatorRadius: 5,
@@ -209,7 +205,6 @@ class _NavbarState extends State<Navbar>
                     ),
                   ),
                 ),
-
                 SizedBox(
                   height: 20,
                 ),
@@ -225,17 +220,11 @@ class _NavbarState extends State<Navbar>
                 ),
                 Container(
                   height: 400,
-                  child: TabBarView(
-                      controller: _tabController,
-                      children:[
-                        BuildLogin(context),
-                        BuildRegistration(context),
-                      ]
-                  ),
+                  child: TabBarView(controller: _tabController, children: [
+                    BuildLogin(context),
+                    BuildRegistration(context),
+                  ]),
                 ),
-
-
-
               ],
             ),
           ),
@@ -244,12 +233,11 @@ class _NavbarState extends State<Navbar>
     );
   }
 
-
   Column BuildRegistration(BuildContext context) {
     return Column(
       children: [
-        textfieldWidget(context, 'Name', RegisternameController,
-            TextInputType.name, false),
+        textfieldWidget(
+            context, 'Name', RegisternameController, TextInputType.name, false),
         SizedBox(height: 20),
         textfieldWidget(context, 'Email', RegisteremailIDController,
             TextInputType.emailAddress, false),
@@ -274,7 +262,7 @@ class _NavbarState extends State<Navbar>
                 endIndent: 10,
               ),
             ),
-            Text( "Sign in via",
+            Text("Sign in via",
                 style: TextStyle(
                     color: Colors.grey[500],
                     fontWeight: FontWeight.w500,
@@ -298,10 +286,16 @@ class _NavbarState extends State<Navbar>
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              SocialIconsWidget(FaIcon(FontAwesomeIcons.apple, color: Colors.white), "Apple"),
-              SocialIconsWidget(FaIcon(FontAwesomeIcons.google, color: Colors.white), "Google"),
-              SocialIconsWidget(FaIcon(FontAwesomeIcons.facebook, color: Colors.white), "Facebook"),
-              SocialIconsWidget(FaIcon(FontAwesomeIcons.bolt, color: Colors.white), "Demo"),
+              SocialIconsWidget(
+                  FaIcon(FontAwesomeIcons.apple, color: Colors.white), "Apple"),
+              SocialIconsWidget(
+                  FaIcon(FontAwesomeIcons.google, color: Colors.white),
+                  "Google"),
+              SocialIconsWidget(
+                  FaIcon(FontAwesomeIcons.facebook, color: Colors.white),
+                  "Facebook"),
+              SocialIconsWidget(
+                  FaIcon(FontAwesomeIcons.bolt, color: Colors.white), "Demo"),
 
 /*
               Container(
@@ -320,13 +314,12 @@ class _NavbarState extends State<Navbar>
             ],
           ),
         ),
-        SizedBox(height: 20,)
-
+        SizedBox(
+          height: 20,
+        )
       ],
     );
   }
-
-
 
   Column BuildLogin(BuildContext context) {
     return Column(
@@ -345,16 +338,14 @@ class _NavbarState extends State<Navbar>
               Row(
                 children: [
                   Theme(
-                    data: ThemeData(
-                        unselectedWidgetColor: widgetColor
-                    ),
-                    child: Transform.scale(scale: 1.25 ,
+                    data: ThemeData(unselectedWidgetColor: widgetColor),
+                    child: Transform.scale(
+                      scale: 1.25,
                       child: Checkbox(
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(2.0),
-
                           ),
-                          focusColor:widgetColor,
+                          focusColor: widgetColor,
                           activeColor: widgetColor,
                           hoverColor: widgetColor,
                           value: checkbox,
@@ -378,7 +369,6 @@ class _NavbarState extends State<Navbar>
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-
                   SizedBox(width: 25),
                   Text(
                     "Forgot Your Password?",
@@ -389,11 +379,9 @@ class _NavbarState extends State<Navbar>
                   )
                 ],
               ),
-
             ],
           ),
         ),
-
 
         SizedBox(
           height: 15,
@@ -413,7 +401,7 @@ class _NavbarState extends State<Navbar>
                 endIndent: 10,
               ),
             ),
-            Text( "Sign in via",
+            Text("Sign in via",
                 style: TextStyle(
                     color: Colors.grey[500],
                     fontWeight: FontWeight.w500,
@@ -437,10 +425,16 @@ class _NavbarState extends State<Navbar>
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              SocialIconsWidget(FaIcon(FontAwesomeIcons.apple, color: Colors.white), "Apple"),
-              SocialIconsWidget(FaIcon(FontAwesomeIcons.google, color: Colors.white), "Google"),
-              SocialIconsWidget(FaIcon(FontAwesomeIcons.facebook, color: Colors.white), "Facebook"),
-              SocialIconsWidget(FaIcon(FontAwesomeIcons.bolt, color: Colors.white), "Demo"),
+              SocialIconsWidget(
+                  FaIcon(FontAwesomeIcons.apple, color: Colors.white), "Apple"),
+              SocialIconsWidget(
+                  FaIcon(FontAwesomeIcons.google, color: Colors.white),
+                  "Google"),
+              SocialIconsWidget(
+                  FaIcon(FontAwesomeIcons.facebook, color: Colors.white),
+                  "Facebook"),
+              SocialIconsWidget(
+                  FaIcon(FontAwesomeIcons.bolt, color: Colors.white), "Demo"),
 /*
               Container(
                 width: 80,
@@ -459,39 +453,17 @@ class _NavbarState extends State<Navbar>
             ],
           ),
         ),
-        SizedBox(height: 20,),
-
-
+        SizedBox(
+          height: 20,
+        ),
       ],
     );
   }
-
-
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  Widget build_login_logo(BuildContext context){
-    return Image.asset('assets/hipstur.png',scale: 0.6) ;
-  }
+Widget build_login_logo(BuildContext context) {
+  return Image.asset('assets/hipstur.png', scale: 0.6);
+}
 
 /*
 Widget buildlogin(BuildContext context) {
@@ -512,83 +484,70 @@ Widget buildlogin(BuildContext context) {
 }
 */
 
-  void do_login(){
-    //see if online
-    //
-  }
+Widget build_login_buttons(BuildContext context) {
+  //if ( UniversalPlatform.isIOS || UniversalPlatform.isMacOS) {
+  //
+  //}
 
+  return Wrap(
+      spacing: 8.0, // gap between adjacent chips
+      runSpacing: 4.0, // gap between lines
+      children: <Widget>[
+        const Text('Login'),
+        const Text('Google Login'),
+        const Text('Facebook Login'),
+        const Text('Apple Login'),
+        const Text('Demo'),
+      ]);
+}
 
-
-  Widget build_login_buttons(BuildContext context ) {
-
-    //if ( UniversalPlatform.isIOS || UniversalPlatform.isMacOS) {
-      //
-    //}
-
-    return Wrap(
-        spacing: 8.0, // gap between adjacent chips
-        runSpacing: 4.0, // gap between lines
-        children: <Widget>[
-          const Text('Login'),
-          const Text('Google Login'),
-          const Text('Facebook Login'),
-          const Text('Apple Login'),
-          const Text('Demo'),
-        ]
-    );
-  }
-
-
-  Widget build_login(BuildContext context, @required void _callback(), String errormsg ) {
-    return Navbar();
-    return Scaffold(
-        backgroundColor: color_bg,
-        //appBar: AppBar(
-        //  title: Text('Hipstur'),
-        //),
-        body: Center(
-            child: InkWell(
-              onTap: () { _callback(); }, // Handle your callback
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.max,
-                children: <Widget>[
-                  build_login_logo(context),
-                  Text(errormsg, style: TextStyle(color:color_errmsg)),
-                  Container(
-                    width: MediaQuery.of(context).size.width * 0.5,
-                      child: TextField(
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: 'Email',
-                    ),
-                  ),
-                  ),
-
-                    Container(
-                      height: 10.0,
-                    ),
-
-                    Container(
-                      width: MediaQuery.of(context).size.width * 0.5,
-                    child: TextField(
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: 'Password',
-                    ),
-                  ),
-                  ),
-
-                  Container(
-                    height: 10.0,
-                  ),
-
-
-                  build_login_buttons(context),
-                ],
+Widget build_login( BuildContext context, void _callback(String msg), String errormsg ) {
+  return Navbar( msgcallback: _callback );
+  /*
+  return Scaffold(
+      backgroundColor: color_bg,
+      //appBar: AppBar(
+      //  title: Text('Hipstur'),
+      //),
+      body: Center(
+          child: InkWell(
+        onTap: () {
+          _callback();
+        }, // Handle your callback
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.max,
+          children: <Widget>[
+            build_login_logo(context),
+            Text(errormsg, style: TextStyle(color: color_errmsg)),
+            Container(
+              width: MediaQuery.of(context).size.width * 0.5,
+              child: TextField(
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'Email',
+                ),
               ),
-            )
-        )
-    );
-  }
+            ),
+            Container(
+              height: 10.0,
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width * 0.5,
+              child: TextField(
+                obscureText: true,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'Password',
+                ),
+              ),
+            ),
+            Container(
+              height: 10.0,
+            ),
+            build_login_buttons(context),
+          ],
+        ),
+      )));
+   */
+}

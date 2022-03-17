@@ -15,6 +15,7 @@ import 'package:universal_platform/universal_platform.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:localstorage/localstorage.dart';
 
+
 void main() {
   if( UniversalPlatform.isAndroid || UniversalPlatform.isIOS ) {
     WidgetsFlutterBinding.ensureInitialized();
@@ -72,8 +73,7 @@ class _MyHomePageState extends State<MyHomePage> {
   AudioPlayer player = AudioPlayer();
   bool isloading = true;
   bool isloggedin = false;
-  //state
-  //string token = "";
+  String token = "";
   final LocalStorage storage = new LocalStorage('hipstur_data.json');
 
   _MyHomePageState() {
@@ -205,6 +205,13 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
+  void login_demo(){
+    setState(() {
+      token="demo";
+      isloggedin=true;
+    });
+  }
+
   void login_google(){
 
   }
@@ -221,8 +228,20 @@ class _MyHomePageState extends State<MyHomePage> {
     //clear everything
     //set state to login
     setState(() {
+      storage.clear();
+      token="";
       isloggedin=false;
     });
+  }
+
+  void _messageCallback(String message){
+    print("_messageCallback: "+message);
+    if( message=="logout" ){
+      logout();
+      return;
+    }
+    if( message=="" ) {
+    }
   }
 
   void _incrementCounter() {
@@ -239,6 +258,8 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+
+
   @override
   Widget build(BuildContext context) {
 
@@ -247,7 +268,7 @@ class _MyHomePageState extends State<MyHomePage> {
     }
 
     if( !isloggedin ){
-      return build_login(context, login, "");
+      return build_login(context, _messageCallback, "");
     }
 
 
