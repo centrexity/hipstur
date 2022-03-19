@@ -6,6 +6,7 @@ list(APPEND FLUTTER_PLUGIN_LIST
   bitsdojo_window_linux
   libwinmedia
   system_tray
+  url_launcher_linux
   window_manager
 )
 
