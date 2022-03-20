@@ -6,6 +6,8 @@ import 'package:hipstur/widgets/song_title.dart';
 import 'package:hipstur/widgets/title.dart';
 import 'package:flutter/material.dart' hide Title;
 
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 
 const coverImage =
     "https://cdn-s-www.ledauphine.com/images/C4A2656A-FDD7-40A0-A8F3-414D00B3A519/NW_raw/ariana-grande-en-janvier-2020-photo-frazer-harrison-getty-images-for-the-recording-academy-afp-1621312560.jpg";
@@ -112,5 +114,24 @@ class _UIPageState extends State<UIPage> {
 
 Widget build_ui( BuildContext context, void _callback(String msg), String errormsg ) {
   //return UIPage( msgcallback: _callback );
-  return UIPage();
+  //return UIPage();
+
+  return Scaffold(
+      backgroundColor: Colors.black,
+      body: Column(
+    children: <Widget>[
+      Expanded(
+        child: UIPage(),
+      ),
+      //Text('Player'),
+      InkWell(
+      child: FaIcon(FontAwesomeIcons.play, color: Colors.white),
+      onTap: () {
+      //print("Click event on Container");
+      _callback("playpause");
+      },
+      )
+    ],
+  )
+  );
 }

@@ -120,7 +120,7 @@ class _MyHomePageState extends State<MyHomePage> {
       //await player.setUrl("https://hipstur.com/test.flac");
     player.setAudioSource(
     AudioSource.uri(Uri.parse(
-    "https://hipstur.com/test.flac")),
+    "https://hipstur.com/test.mp3")),
     preload: false);
       player.load();
     } on PlayerException catch (e) {
@@ -253,6 +253,10 @@ class _MyHomePageState extends State<MyHomePage> {
   void _messageCallback(String message){
     print("_messageCallback: "+message);
     if( message=="playpause" ){
+      player.play();
+      setState(() {
+
+      });
       return;
     }
     if( message=="next" ){
