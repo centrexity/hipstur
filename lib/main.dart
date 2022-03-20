@@ -302,7 +302,7 @@ class _MyHomePageState extends State<MyHomePage> {
       return build_login(context, _messageCallback, "");
     }
 
-
+    return build_ui(context, _messageCallback, "");
 
     return Scaffold(
       drawer: Menu(),

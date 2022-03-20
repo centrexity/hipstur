@@ -6,42 +6,22 @@ import 'package:hipstur/widgets/song_title.dart';
 import 'package:hipstur/widgets/title.dart';
 import 'package:flutter/material.dart' hide Title;
 
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Ariana Grande',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        highlightColor: Colors.transparent,
-        splashColor: Colors.transparent,
-      ),
-      home: const MyHomePage(),
-    );
-  }
-}
 
 const coverImage =
     "https://cdn-s-www.ledauphine.com/images/C4A2656A-FDD7-40A0-A8F3-414D00B3A519/NW_raw/ariana-grande-en-janvier-2020-photo-frazer-harrison-getty-images-for-the-recording-academy-afp-1621312560.jpg";
 
 const expandedHeight = 240.0;
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({
+class UIPage extends StatefulWidget {
+  const UIPage({
     Key? key,
   }) : super(key: key);
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<UIPage> createState() => _UIPageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _UIPageState extends State<UIPage> {
   final _controller = ScrollController();
   double _offset = 0;
 
@@ -127,4 +107,10 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
   }
+}
+
+
+Widget build_ui( BuildContext context, void _callback(String msg), String errormsg ) {
+  //return UIPage( msgcallback: _callback );
+  return UIPage();
 }
