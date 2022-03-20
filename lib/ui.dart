@@ -68,7 +68,7 @@ class _UIPageState extends State<UIPage> {
                   coverImage,
                   fit: BoxFit.cover,
                 ),
-                expandedTitleScale: 1,
+                //expandedTitleScale: 1,
                 titlePadding: const EdgeInsets.all(24),
                 title: const Title(),
               ),
