@@ -8,21 +8,32 @@ import 'package:http/http.dart' as http;
 import 'loading.dart';
 import 'login.dart';
 import 'menu.dart';
-import 'systray.dart';
+import 'systray_system_tray.dart';
+//import 'systray_tray_manager.dart';
 import 'ui.dart' ;
 
 //import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:universal_platform/universal_platform.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:just_audio_background/just_audio_background.dart';
 import 'package:localstorage/localstorage.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 
-void main() {
+Future<void> main() async {
   if( UniversalPlatform.isAndroid || UniversalPlatform.isIOS ) {
     WidgetsFlutterBinding.ensureInitialized();
     //MobileAds.instance.initialize();
   }
+
+  if( UniversalPlatform.isAndroid || UniversalPlatform.isIOS || UniversalPlatform.isWeb ) {
+    await JustAudioBackground.init(
+      androidNotificationChannelId: 'com.ryanheise.bg_demo.channel.audio',
+      androidNotificationChannelName: 'Audio playback',
+      androidNotificationOngoing: true,
+    );
+  }
+
   runApp(const MyApp());
 }
 
@@ -80,7 +91,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   _MyHomePageState() {
     if (UniversalPlatform.isWindows || UniversalPlatform.isLinux || UniversalPlatform.isMacOS) {
-      SysTray st = SysTray();
+      print("SysTray");
+      final SysTray st = new SysTray( _messageCallback );
     }
   }
 
@@ -118,16 +130,15 @@ class _MyHomePageState extends State<MyHomePage> {
     //player.load();
     try {
       //await player.setUrl("https://hipstur.com/test.flac");
-    player.setAudioSource(
-    AudioSource.uri(Uri.parse(
-    "https://hipstur.com/test.mp3")),
-    preload: false);
+      player.setAudioSource(AudioSource.uri(Uri.parse("https://hipstur.com/test.mp3")), preload: false);
+      //player.setAudioSource(AudioSource.uri(Uri.parse("/home/user/test.mp3")), preload: false);
       player.load();
     } on PlayerException catch (e) {
       // iOS/macOS: maps to NSError.code
       // Android: maps to ExoPlayerException.type
       // Web: maps to MediaError.code
       // Linux/Windows: maps to PlayerErrorCode.index
+      print("loadaudio error PlayerException");
       print("Error code: ${e.code}");
       // iOS/macOS: maps to NSError.localizedDescription
       // Android: maps to ExoPlaybackException.getMessage()
@@ -253,9 +264,10 @@ class _MyHomePageState extends State<MyHomePage> {
   void _messageCallback(String message){
     print("_messageCallback: "+message);
     if( message=="playpause" ){
-      player.play();
       setState(() {
-
+        loadaudio();
+        print("player.play");
+        player.play();
       });
       return;
     }

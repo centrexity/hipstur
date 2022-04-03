@@ -11,6 +11,7 @@ import 'package:system_tray/system_tray.dart';
 
 
 
+//pubspec system_tray:
 
 class SysTray  {
 
@@ -21,7 +22,7 @@ class SysTray  {
   //@override
   //void initState() {
   SysTray() {
-    print("here");
+    print("here systray");
     //super.initState();
     initSystemTray();
   }
