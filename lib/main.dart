@@ -18,6 +18,8 @@ import 'package:just_audio/just_audio.dart';
 import 'package:just_audio_background/just_audio_background.dart';
 import 'package:localstorage/localstorage.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:bitsdojo_window/bitsdojo_window.dart';
+
 
 
 Future<void> main() async {
@@ -36,6 +38,17 @@ Future<void> main() async {
   }
 
   runApp(const MyApp());
+
+  if( UniversalPlatform.isLinux ) {
+    doWhenWindowReady(() {
+      const initialSize = Size(1280, 720);
+      appWindow.minSize = initialSize;
+      appWindow.size = initialSize;
+      appWindow.alignment = Alignment.center;
+      appWindow.title = "Hipstur";
+      appWindow.show();
+    });
+  }
 }
 
 class MyApp extends StatelessWidget {
@@ -124,6 +137,12 @@ class _MyHomePageState extends State<MyHomePage> {
       print(e.toString());
     }
   }
+
+
+  void loadplaylist( String listid ){
+
+  }
+
 
   void loadaudio() async{
     //player = AudioPlayer();
