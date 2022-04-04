@@ -54,7 +54,7 @@ class SysTray  {
       path = p.joinAll([
         p.dirname(Platform.resolvedExecutable),
         'data/flutter_assets/assets',
-        'tray.png'
+        'tray.svg'
       ]);
       print(path);
     }
