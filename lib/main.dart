@@ -31,6 +31,7 @@ Future<void> main() async {
       androidNotificationChannelId: 'com.ryanheise.bg_demo.channel.audio',
       androidNotificationChannelName: 'Audio playback',
       androidNotificationOngoing: true,
+      //androidNotificationIcon: p.joinAll([p.dirname(Platform.resolvedExecutable), 'data/flutter_assets/assets', 'tray.png']),
     );
   }
 
@@ -129,9 +130,44 @@ class _MyHomePageState extends State<MyHomePage> {
     //player.setUrl('https://hipstur.com/test.flac');
     //player.load();
     try {
+
+      int _nextMediaId = 0;
+      //late AudioPlayer _player;
+      final _playlist = ConcatenatingAudioSource(children: [
+        AudioSource.uri(
+          Uri.parse("https://hipstur.com/test.flac"),
+          tag: MediaItem(
+            id: '${_nextMediaId++}',
+            album: "Science Friday",
+            title: "A Salute To Head-Scratching Science",
+            artUri: Uri.parse("https://media.wnyc.org/i/1400/1400/l/80/1/ScienceFriday_WNYCStudios_1400.jpg"),
+          ),
+        ),
+        AudioSource.uri(
+          Uri.parse("https://hipstur.com/test.mp3"),
+          tag: MediaItem(
+            id: '${_nextMediaId++}',
+            album: "Science Friday",
+            title: "From Cat Rheology To Operatic Incompetence",
+            artUri: Uri.parse("https://media.wnyc.org/i/1400/1400/l/80/1/ScienceFriday_WNYCStudios_1400.jpg"),
+          ),
+        ),
+        AudioSource.uri(
+          Uri.parse("https://hipstur.com/test.mp3"),
+          tag: MediaItem(
+            id: '${_nextMediaId++}',
+            album: "Public Domain",
+            title: "Nature Sounds",
+            artUri: Uri.parse("https://media.wnyc.org/i/1400/1400/l/80/1/ScienceFriday_WNYCStudios_1400.jpg"),
+          ),
+        ),
+      ]);
+
+
       //await player.setUrl("https://hipstur.com/test.flac");
-      player.setAudioSource(AudioSource.uri(Uri.parse("https://hipstur.com/test.mp3")), preload: false);
+      //player.setAudioSource(AudioSource.uri(Uri.parse("https://hipstur.com/test.mp3")), preload: false);
       //player.setAudioSource(AudioSource.uri(Uri.parse("/home/user/test.mp3")), preload: false);
+      player.setAudioSource( _playlist, preload: false);
       player.load();
     } on PlayerException catch (e) {
       // iOS/macOS: maps to NSError.code
@@ -289,20 +325,12 @@ class _MyHomePageState extends State<MyHomePage> {
       login_google();
       return;
     }
-  }
 
-  void _incrementCounter() {
-    //player.setUrl('https://hipstur.com/test.flac');
-    //player.load();
-    player.play();
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
+    if( message=="systray:exit" ) {
+      //SystemNavigator.pop();
+      exit(0);
+      return;
+    }
   }
 
 
@@ -319,29 +347,6 @@ class _MyHomePageState extends State<MyHomePage> {
     }
 
     return build_ui(context, _messageCallback, "");
-
-    return Scaffold(
-      drawer: Menu(),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
-    );
   }
 }
 

@@ -125,12 +125,11 @@ bool SystemTray::create_indicator(const char* title, const char* iconPath, const
 	_xapp_status_icon_set_icon_name(xapp_tray_icon, iconPath);
 return true;
 
-  bool ret = false;
 
+  bool ret = false;
   do {
     _app_indicator = _app_indicator_new( title, iconPath, APP_INDICATOR_CATEGORY_APPLICATION_STATUS);
     _app_indicator_set_status(_app_indicator, APP_INDICATOR_STATUS_ACTIVE);
-
     ret = true;
   } while (false);
 

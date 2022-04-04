@@ -60,6 +60,11 @@ class SysTray  {
     }
 
     final menu = [
+      MenuItem(label: 'Play', onClicked: (){ msgcallback("systray:play"); } ),
+      MenuItem(label: 'Pause', onClicked: (){ msgcallback("systray:pause"); } ),
+      MenuItem(label: 'Next', onClicked: (){ msgcallback("systray:next"); } ),
+      MenuItem(label: 'Previous', onClicked: (){ msgcallback("systray:previous"); } ),
+      MenuItem(label: 'Stop', onClicked: (){ msgcallback("systray:stop"); } ),
       MenuItem(label: 'Show', onClicked: (){ msgcallback("systray:show"); } ),
       MenuItem(label: 'Hide', onClicked: (){ msgcallback("systray:hide"); } ),
       MenuItem(label: 'Exit', onClicked: (){ msgcallback("systray:exit"); } ),
