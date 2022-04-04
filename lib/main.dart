@@ -139,8 +139,38 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
 
-  void loadplaylist( String listid ){
+  ConcatenatingAudioSource loadplaylist( String listid ){
+    //song|album|artists|duration|id
+    //imageurl songurl lyricsurl all derived from id
+    String data = "";
+    data=data+"song1|demo|artist|60|demo1\n";
+    data=data+"song2|demo|artist|60|demo2\n";
+    data=data+"song3|demo|artist|60|demo3\n";
 
+    int _nextMediaId = 0;
+    ConcatenatingAudioSource playlist = ConcatenatingAudioSource(children: []);
+    LineSplitter.split(data).forEach((line){
+      line = line.trim();
+      if( line!="" ) {
+        //get pieces
+        List pieces = line.split("|");
+        //print("pieces length");
+        //print(pieces.length);
+        if( pieces.length==5 ) {
+          playlist.add( AudioSource.uri(
+            Uri.parse("https://hipstur.com/test.flac"),
+            tag: MediaItem(
+              id: '${_nextMediaId++}',
+              album: pieces[1],
+              title: pieces[0],
+              artUri: Uri.parse("https://media.wnyc.org/i/1400/1400/l/80/1/ScienceFriday_WNYCStudios_1400.jpg"),
+            ),
+          ) );
+        }
+      }
+    });
+
+    return playlist;
   }
 
 
@@ -152,6 +182,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
       int _nextMediaId = 0;
       //late AudioPlayer _player;
+      /*
       final _playlist = ConcatenatingAudioSource(children: [
         AudioSource.uri(
           Uri.parse("https://hipstur.com/test.flac"),
@@ -181,6 +212,15 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ),
       ]);
+       */
+
+      ConcatenatingAudioSource _playlist = loadplaylist( "demo" );
+      print("playlist length: ");
+      print(_playlist.children.length);
+      if( _playlist.children.length<=0 ){
+        player.stop();
+        return;
+      }
 
 
       //await player.setUrl("https://hipstur.com/test.flac");
