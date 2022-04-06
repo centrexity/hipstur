@@ -82,6 +82,13 @@ class SysTray  {
     _systemTray.registerSystemTrayEventHandler((eventName) {
       debugPrint("eventName: $eventName");
       print("eventName: $eventName");
+      if (eventName == "leftMouseDown") {
+      } else if (eventName == "leftMouseUp") {
+        _systemTray.popUpContextMenu();
+      } else if (eventName == "rightMouseDown") {
+      } else if (eventName == "rightMouseUp") {
+        _systemTray.popUpContextMenu();
+      }
     });
   }
 
