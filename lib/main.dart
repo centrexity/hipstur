@@ -96,12 +96,17 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+
   AudioPlayer player = AudioPlayer();
   bool isloading = true;
   bool isloggedin = false;
+  bool isplaying = false;
   String token = "";
-  final LocalStorage storage = new LocalStorage('hipstur_data.json');
+  List<String> requestqueue;
+  int requestdelay = 1000;
+  final LocalStorage storage = LocalStorage('hipstur_data.json');
+
+  Map<String, String> playlistdata;
 
   _MyHomePageState() {
     if (UniversalPlatform.isWindows || UniversalPlatform.isLinux || UniversalPlatform.isMacOS) {
@@ -139,31 +144,104 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
 
+
+  void requestadd( url ){
+    if( !requestqueue.contains(url) ) {
+      requestqueue.add(url);
+      requestprocess();
+    }
+  }
+  void requesthandle(){
+    //parse
+    //update ui
+  }
+
+  void requestprocess() async {
+    //see if we have requests to process
+    if( requestqueue.isEmpty ){
+      return;
+    }
+
+    //get url
+    String url = requestqueue.first;
+    try {
+      final response = await http.get(Uri.parse(url));
+      //print("response code: "+response.statusCode);
+      if (response.statusCode == 200) {
+        //print("connected");
+        //handle response.body;
+        //success so lets process the next one
+        requestdelay = 0;
+        requestqueue.removeAt(0);
+        requestprocess();
+        return;
+      }
+    } catch (e) {
+      // Fallback for all errors
+      print(e.toString());
+    }
+
+    //move first to last just incase its a server issue other things can process
+    requestqueue.removeAt(0);
+    requestqueue.add(url);
+
+    //if failed increase delay up to max
+    if( requestdelay < 60000 ){
+      if( requestqueue<1000 ){
+        requestdelay = 1000;
+      } else {
+        requestdelay = (requestdelay * 1.1) as int;
+      }
+    }
+
+    //if still requests in queue
+    if( requestqueue.isNotEmpty ) {
+      Future.delayed(const Duration(milliseconds: requestdelay), () {
+        requestprocess();
+      });
+    }
+  }
+
+
   ConcatenatingAudioSource loadplaylist( String listid ){
     //song|album|artists|duration|id
     //imageurl songurl lyricsurl all derived from id
-    String data = "";
-    data=data+"song1|demo|artist|60|demo1\n";
-    data=data+"song2|demo|artist|60|demo2\n";
-    data=data+"song3|demo|artist|60|demo3\n";
+    String? data = "";
+    //data=data+"song1\tdemo\tartist\t60\tdemo1\n";
+    //data=data+"song2\tdemo\tartist\t60\tdemo2\n";
+    //data=data+"song3\tdemo\tartist\t60\tdemo3\n";
+    listid="demo";
+
+    ConcatenatingAudioSource playlist = ConcatenatingAudioSource(children: []);
+
+    //playlistdata
+    if( !playlistdata.containsKey(listid) ){
+      requestadd("https://hipstur.com/playlist/"+listid);
+      return playlist;
+    }
+
+    data = playlistdata[listid];
+    if( data == null ){
+      requestadd("https://hipstur.com/playlist/"+listid);
+      return playlist;
+    }
 
     int _nextMediaId = 0;
-    ConcatenatingAudioSource playlist = ConcatenatingAudioSource(children: []);
     LineSplitter.split(data).forEach((line){
       line = line.trim();
       if( line!="" ) {
         //get pieces
-        List pieces = line.split("|");
+        List pieces = line.split("\t");
         //print("pieces length");
         //print(pieces.length);
         if( pieces.length==5 ) {
           playlist.add( AudioSource.uri(
-            Uri.parse("https://hipstur.com/test.flac"),
+            Uri.parse("https://hipstur.com/song/"+pieces[4]+".mp3"),
             tag: MediaItem(
               id: '${_nextMediaId++}',
               album: pieces[1],
               title: pieces[0],
-              artUri: Uri.parse("https://media.wnyc.org/i/1400/1400/l/80/1/ScienceFriday_WNYCStudios_1400.jpg"),
+              artUri: Uri.parse("https://hipstur.com/song/"+pieces[4]+".jpg"),
             ),
           ) );
         }
