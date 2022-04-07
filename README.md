@@ -17,7 +17,7 @@ We believe your audio is yours and we want to keep it independant of stores/hard
 | Progress                       | Android | iOS | macOS | Web | Windows | Linux |
 | ------------------------------ | :-----: | :-: | :---: | :-: | :-----: | :---: |
 | Initial Build                  | ✅      | ✅  | ✅    | ✅  | ✅      | ✅    |
-| Demo Login                     |         |     |       |     |         |       |
+| Demo Login                     | ✅      | ✅  | ✅    | ✅  | ✅      | ✅    |
 | Account Login                  |         |     |       |     |         |       |
 | Google Login                   |         |     |       |     |         |       |
 | Facebook Login                 |         |     |       |     |         |       |
@@ -26,10 +26,11 @@ We believe your audio is yours and we want to keep it independant of stores/hard
 | Play Lossless                  |         |     |       |     |         |       |
 | Play Lossy Lower Quality       |         |     |       |     |         |       |
 | Offline Playback               |         |     |       |     |         |       |
-| Background Play                |         |     |       |     |         |       |
+| Background Play                | ✅      | ✅  | ✅    | ✅  | ✅      | ✅    |
 | Background Upload              |         |     |       |     |         |       |
 | Account Sync                   |         |     |       |     |         |       |
 | Background Controls            |         |     |       |     |         |       |
 | Crossfade                      |         |     |       |     |         |       |
+| System tray menu               | ✅      | ✅  | ✅    | ✅  | ✅      | ✅    |
 
 
