@@ -112,9 +112,14 @@ class _UIPageState extends State<UIPage> {
 }
 
 
-Widget build_ui( BuildContext context, void _callback(String msg), String errormsg ) {
+Widget build_ui( BuildContext context, void _callback(String msg), String errormsg, bool isplaying ) {
   //return UIPage( msgcallback: _callback );
   //return UIPage();
+
+  FaIcon playicon = FaIcon(FontAwesomeIcons.play, color: Colors.white);
+  if( isplaying ){
+    playicon = FaIcon(FontAwesomeIcons.pause, color: Colors.white);
+  }
 
   return Scaffold(
       backgroundColor: Colors.black,
@@ -125,7 +130,7 @@ Widget build_ui( BuildContext context, void _callback(String msg), String errorm
       ),
       //Text('Player'),
       InkWell(
-      child: FaIcon(FontAwesomeIcons.play, color: Colors.white),
+      child: playicon,
       onTap: () {
       //print("Click event on Container");
       _callback("playpause");

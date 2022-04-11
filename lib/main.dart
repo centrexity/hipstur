@@ -102,11 +102,11 @@ class _MyHomePageState extends State<MyHomePage> {
   bool isloggedin = false;
   bool isplaying = false;
   String token = "";
-  List<String> requestqueue;
+  List<String> requestqueue = [];
   int requestdelay = 1000;
   final LocalStorage storage = LocalStorage('hipstur_data.json');
 
-  Map<String, String> playlistdata;
+  Map<String, String> playlistdata = {};
 
   _MyHomePageState() {
     if (UniversalPlatform.isWindows || UniversalPlatform.isLinux || UniversalPlatform.isMacOS) {
@@ -187,16 +187,16 @@ class _MyHomePageState extends State<MyHomePage> {
 
     //if failed increase delay up to max
     if( requestdelay < 60000 ){
-      if( requestqueue<1000 ){
+      if( requestdelay < 1000 ){
         requestdelay = 1000;
       } else {
-        requestdelay = (requestdelay * 1.1) as int;
+        requestdelay = (requestdelay * 1.1).round();
       }
     }
 
     //if still requests in queue
     if( requestqueue.isNotEmpty ) {
-      Future.delayed(const Duration(milliseconds: requestdelay), () {
+      Future.delayed(Duration(milliseconds: requestdelay), () {
         requestprocess();
       });
     }
@@ -438,9 +438,15 @@ class _MyHomePageState extends State<MyHomePage> {
     print("_messageCallback: "+message);
     if( message=="playpause" ){
       setState(() {
-        loadaudio();
-        print("player.play");
-        player.play();
+        if( isplaying ){
+          isplaying = false;
+          player.pause();
+        } else {
+          loadaudio();
+          print("player.play");
+          player.play();
+          isplaying = true;
+        }
       });
       return;
     }
@@ -483,7 +489,7 @@ class _MyHomePageState extends State<MyHomePage> {
       return build_login(context, _messageCallback, "");
     }
 
-    return build_ui(context, _messageCallback, "");
+    return build_ui(context, _messageCallback, "", isplaying);
   }
 }
 
