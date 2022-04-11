@@ -23,6 +23,7 @@ We believe your audio is yours and we want to keep it independant of stores/hard
 | Facebook Login                 |         |     |       |     |         |       |
 | Apple Login                    |         |     |       |     |         |       |
 | Menu                           |         |     |       |     |         |       |
+| Player UI                      |         |     |       |     |         |       |
 | Play Lossless                  |         |     |       |     |         |       |
 | Play Lossy Lower Quality       |         |     |       |     |         |       |
 | Offline Playback               |         |     |       |     |         |       |
@@ -31,6 +32,6 @@ We believe your audio is yours and we want to keep it independant of stores/hard
 | Account Sync                   |         |     |       |     |         |       |
 | Background Controls            |         |     |       |     |         |       |
 | Crossfade                      |         |     |       |     |         |       |
-| System tray menu               | ✅      | ✅  | ✅    | ✅  | ✅      | ✅    |
+| System Tray Menu               | ✅      | ✅  | ✅    | ✅  | ✅      | ✅    |
 
 
