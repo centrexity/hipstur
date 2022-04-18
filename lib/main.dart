@@ -166,25 +166,31 @@ class _MyHomePageState extends State<MyHomePage> {
     String url = requestqueue.first;
     try {
       final response = await http.get(Uri.parse(url));
-      //print("response code: "+response.statusCode);
       if (response.statusCode == 200) {
-        //print("connected");
+        //print(url);
+        //print("response code: "+response.statusCode);
+        //print(response.body);
         //handle response.body;
+        if( url=="https://hipstur.com/playlist/demo.txt" ){
+          setState(() {
+            playlistdata["demo"] = response.body;
+          });
+        }
         //success so lets process the next one
-        requestdelay = 0;
+        requestdelay = 100;
         requestqueue.removeAt(0);
         requestprocess();
         return;
       }
+      print("response code: ");
+      print( response.statusCode );
     } catch (e) {
       // Fallback for all errors
       print(e.toString());
     }
-
-    //move first to last just incase its a server issue other things can process
+    //move first to last just in case its a server issue other things can process
     requestqueue.removeAt(0);
     requestqueue.add(url);
-
     //if failed increase delay up to max
     if( requestdelay < 60000 ){
       if( requestdelay < 1000 ){
@@ -193,12 +199,19 @@ class _MyHomePageState extends State<MyHomePage> {
         requestdelay = (requestdelay * 1.1).round();
       }
     }
-
     //if still requests in queue
     if( requestqueue.isNotEmpty ) {
       Future.delayed(Duration(milliseconds: requestdelay), () {
         requestprocess();
       });
+    }
+  }
+
+  void loadplaylistdata( String listid ){
+    listid="demo";
+    if( !playlistdata.containsKey(listid) ){
+      requestadd("https://hipstur.com/playlist/"+listid+".txt");
+      return;
     }
   }
 
@@ -216,13 +229,13 @@ class _MyHomePageState extends State<MyHomePage> {
 
     //playlistdata
     if( !playlistdata.containsKey(listid) ){
-      requestadd("https://hipstur.com/playlist/"+listid);
+      requestadd("https://hipstur.com/playlist/"+listid+".txt");
       return playlist;
     }
 
     data = playlistdata[listid];
     if( data == null ){
-      requestadd("https://hipstur.com/playlist/"+listid);
+      requestadd("https://hipstur.com/playlist/"+listid+".txt");
       return playlist;
     }
 
@@ -235,13 +248,14 @@ class _MyHomePageState extends State<MyHomePage> {
         //print("pieces length");
         //print(pieces.length);
         if( pieces.length==5 ) {
+          print("https://hipstur.com/song/"+pieces[4]+".mp3");
           playlist.add( AudioSource.uri(
-            Uri.parse("https://hipstur.com/song/"+pieces[4]+".mp3"),
+            Uri.parse("https://hipstur.com/song/"+pieces[4]+"/1.mp3"),
             tag: MediaItem(
               id: '${_nextMediaId++}',
               album: pieces[1],
               title: pieces[0],
-              artUri: Uri.parse("https://hipstur.com/song/"+pieces[4]+".jpg"),
+              artUri: Uri.parse("https://hipstur.com/song/"+pieces[4]+"/t.jpg"),
             ),
           ) );
         }
@@ -403,6 +417,7 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       token="demo";
       isloggedin=true;
+      loadplaylistdata( "demo" );
     });
   }
 
@@ -428,7 +443,8 @@ class _MyHomePageState extends State<MyHomePage> {
     //clear everything
     //set state to login
     setState(() {
-      storage.clear();
+      //storage.clear();
+      storage.setItem("token", "");
       token="";
       isloggedin=false;
     });
