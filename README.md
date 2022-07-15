@@ -35,3 +35,6 @@ We believe your audio is yours and we want to keep it independant of stores/hard
 | System Tray Menu               | ✅      | ✅  | ✅    | ✅  | ✅      | ✅    |
 
 
+## Future thoughts
+I got a bit side tracked working on a future version of this not in flutter but that is so far out. I will be working on this version from here on. Gotta walk before I run or something like that :)
+
